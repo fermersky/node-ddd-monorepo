@@ -1,8 +1,22 @@
-# Turborepo starter
+# Node.js server with minimalistic implementation of DDD
 
-This is an official starter Turborepo.
+This is a Node.js server that implements Domain-Driven Design (DDD) in a minimalistic way. The main purpose of this server is to focus on business logic and be agnostic to any transport or protocol.
 
-## Using this example
+The server has two entities, namely Driver and WorkShift. A driver can have multiple shifts. Instead of using an ORM, the server uses manual mapping from SQL queries to domain entities. The server implements dependency injection using ESM and function parameters. However, using `tsyringe/inversify` libraries would be a better option as it would remove the responsibility of instantiating dependencies from the app code.
+
+The server supports two different transports: HTTP (fastify) and WebSocket (uWebSocket.js).
+
+The documentation is generated using Docusaurus, and can be found in the `drivers-app-docs` folder.
+
+## Some libs from the app stack
+
+- `tsx`: for local development & file watching
+- `esbuild`: for TS -> JS compilation
+- `tsc-alias`: for replacing paths aliases (such as `@api, @domain and @infrastrcuture`) with relative paths
+- `uWebSockets.js`: C++ implementation of WebSockets
+- `Turborepo`: build system for monorepo - https://turbo.build/repo
+
+## Turborepo
 
 Run the following command:
 
@@ -16,13 +30,10 @@ This Turborepo includes the following packages/apps:
 
 ### Apps and Packages
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `ui`: a stub React component library shared by both `web` and `docs` applications
+- `docs`: docusaurus app
+- `server`: backend
 - `eslint-config-custom`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
 - `tsconfig`: `tsconfig.json`s used throughout the monorepo
-
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 
@@ -37,7 +48,7 @@ This Turborepo has some additional tools already setup for you:
 To build all apps and packages, run the following command:
 
 ```
-cd my-turborepo
+cd node-ddd-monorepo
 pnpm build
 ```
 
@@ -46,7 +57,7 @@ pnpm build
 To develop all apps and packages, run the following command:
 
 ```
-cd my-turborepo
+cd node-ddd-monorepo
 pnpm dev
 ```
 
@@ -57,7 +68,7 @@ Turborepo can use a technique known as [Remote Caching](https://turbo.build/repo
 By default, Turborepo will cache locally. To enable Remote Caching you will need an account with Vercel. If you don't have an account you can [create one](https://vercel.com/signup), then enter the following commands:
 
 ```
-cd my-turborepo
+cd node-ddd-monorepo
 npx turbo login
 ```
 
