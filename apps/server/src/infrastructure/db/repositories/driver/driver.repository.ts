@@ -1,6 +1,6 @@
 import { DriverDoesNotExistError, type IDriverRepository } from '@domain/driver/index.js';
 
-import type { PoolClientDecorator } from '@infrastructure/db/pg/index.js';
+import { PoolClientDecorator } from '@infrastructure/db/pg/index.js';
 
 import {
   type IDriverQueryResult,

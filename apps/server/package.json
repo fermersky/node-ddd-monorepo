@@ -5,11 +5,11 @@
   "main": "./dist/app.js",
   "type": "module",
   "scripts": {
-    "lint": "tsc || eslint .",
+    "lint": "tsc --noEmit || eslint .",
     "format": "pnpm prettier . --write",
     "dev": "run-p dev:*",
     "dev:watch": "tsx watch ./src/app.ts",
-    "tsc-build": "pnpm rimraf ./dist && tsc && tsc-alias",
+    "dev:tsc": "tsc -w --noEmit",
     "test": "pnpm build && NODE_OPTIONS=--experimental-vm-modules pnpm jest",
     "build": "esbuild $(find ./src \\( -name '*.ts' \\)) --platform=node --outdir=dist --format=esm && tsc-alias"
   },
@@ -37,8 +37,6 @@
     "npm-run-all": "^4.1.5",
     "prettier": "~3.0.3",
     "rimraf": "^5.0.5",
-    "ts-jest": "^29.1.1",
-    "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.8",
     "tsconfig": "workspace:*",
     "tsx": "^3.14.0",
