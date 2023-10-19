@@ -1,16 +1,19 @@
 {
+  "name": "node-turbo",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "turbo run format",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
     "tsconfig": "workspace:*",
-    "turbo": "^1.10.12"
+    "turbo": "latest",
+    "@trivago/prettier-plugin-sort-imports": "^4.1.1"
   },
   "packageManager": "pnpm@8.6.10"
 }

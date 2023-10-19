@@ -1,0 +1,47 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/app.js",
+  "type": "module",
+  "scripts": {
+    "lint": "tsc || eslint .",
+    "format": "pnpm prettier . --write",
+    "dev": "run-p dev:*",
+    "dev:watch": "tsx watch ./src/app.ts",
+    "tsc-build": "pnpm rimraf ./dist && tsc && tsc-alias",
+    "test": "pnpm build && NODE_OPTIONS=--experimental-vm-modules pnpm jest",
+    "build": "esbuild $(find ./src \\( -name '*.ts' \\)) --platform=node --outdir=dist --format=esm && tsc-alias"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.0",
+    "dotenv": "^16.3.1",
+    "fastify": "^4.21.0",
+    "jsonwebtoken": "^9.0.1",
+    "pg": "^8.11.2",
+    "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.31.0",
+    "zod": "^3.21.4"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/jest": "^29.5.4",
+    "@types/jsonwebtoken": "^9.0.2",
+    "@types/pg": "^8.10.2",
+    "@types/ws": "^8.5.5",
+    "esbuild": "^0.19.5",
+    "eslint-config-custom": "workspace:*",
+    "jest": "^29.6.4",
+    "npm-run-all": "^4.1.5",
+    "prettier": "~3.0.3",
+    "rimraf": "^5.0.5",
+    "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.8",
+    "tsconfig": "workspace:*",
+    "tsx": "^3.14.0",
+    "typescript": "^5.1.6"
+  }
+}

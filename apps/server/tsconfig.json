@@ -1,0 +1,17 @@
+{
+  "extends": "tsconfig/base",
+  "include": ["./src/**/*"],
+  "exclude": ["jest.config.js"],
+  "compilerOptions": {
+    "paths": {
+      "@domain/*": ["./src/domain/*"],
+      "@infrastructure/*": ["./src/infrastructure/*"],
+      "@api/*": ["./src/api/*"]
+    },
+    "sourceMap": true,
+    "moduleResolution": "NodeNext",
+    "module": "NodeNext",
+    "verbatimModuleSyntax": true,
+    "outDir": "./dist"
+  }
+}
