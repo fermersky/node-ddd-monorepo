@@ -30,7 +30,7 @@ The list below represents available requests payload. All events have common inc
 
 Incoming body structure looks like:
 
-```json
+```js
 {
   "query": "<event name>",
   "params": {} // could be optional as not all events require parameters
@@ -39,7 +39,7 @@ Incoming body structure looks like:
 
 Outgoing:
 
-```json
+```js
 {
   "event": "<event name>",
   "data": {},
@@ -61,7 +61,7 @@ a _request-response_ way.
 
 Get all available drivers in the database. Supports pagination.
 
-```json title="Example input"
+```js title="Example input"
 {
   "query": "getAllDrivers",
   "params": {
@@ -73,7 +73,7 @@ Get all available drivers in the database. Supports pagination.
 
 > _param **take** of type `Number` - size of the array of drivers._ <br/> _param **skip** of type `Number` - count of records to skip._
 
-```json title="Example output"
+```js title="Example output"
 {
   "data": [
     {
@@ -101,7 +101,7 @@ Get all available drivers in the database. Supports pagination.
 Get driver data and his workshifts by email obtained from the JWT payload.<br/>
 HTTP `/login` endpoint is used for recieving credentials.
 
-```json title="Example input"
+```js title="Example input"
 {
   "query": "me",
   "params": {
@@ -112,7 +112,7 @@ HTTP `/login` endpoint is used for recieving credentials.
 
 > _param **token** of type `String` - JWT authorization token used to establish WS connection._
 
-```json title="Example output"
+```js title="Example output"
 {
   "data": {
     "id": "9495f3b5-4075-4c47-9919-e7bc45da171d",
