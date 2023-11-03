@@ -1,13 +1,13 @@
 import { type IWsIncomingMessage, WsMessageSchema } from '../routes/driver/driver.routes.types.js';
 import { handleMessage } from '../routes/routes.js';
 import { jwtWsService } from '../services/index.js';
-import sessionManager, { type UserData } from '../session.manager.js';
+import wsSessionManager, { type UserData } from '../session.manager.js';
 import type { WsHandlers } from './handlers.types.js';
 
 export const handlers: WsHandlers = {
   open: (ws) => {
     const { id } = ws.getUserData();
-    sessionManager.set(id, ws);
+    wsSessionManager.set(id, ws);
 
     console.log(`Established new WS connection ${id}`);
   },
@@ -33,7 +33,7 @@ export const handlers: WsHandlers = {
 
   close: (ws, code, message) => {
     const { id } = ws.getUserData();
-    sessionManager.delete(id);
+    wsSessionManager.delete(id);
 
     console.log(`WebSocket closed, Goodbye ${id}`);
   },

@@ -17,7 +17,7 @@ beforeAll(async () => {
 
 afterAll(async () => {
   await app.close();
-  await pool.end();
+  await pool.destroy();
 });
 
 describe('Driver controller endpoints tests', () => {

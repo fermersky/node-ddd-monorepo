@@ -1,43 +1,38 @@
+import type { Knex } from 'knex';
+
 import { DriverDoesNotExistError, type IDriverRepository } from '@domain/driver/index.js';
 
-import { PoolClientDecorator } from '@infrastructure/db/pg/index.js';
+import { type IDriverQueryResult, mapDriverToDomain, mapDriversWorkShiftsToDomain } from './types.js';
 
-import {
-  type IDriverQueryResult,
-  type IDriverWorkShiftsQueryResult,
-  mapDriverToDomain,
-  mapDriversWorkShiftsToDomain,
-} from './types.js';
-
-export default function (client: PoolClientDecorator): IDriverRepository {
+export default function (client: Knex): IDriverRepository {
   return {
     async getAll() {
-      const result = await client.query<IDriverQueryResult>('SELECT * FROM drivers');
+      const result = await client<IDriverQueryResult>('drivers').select('*');
 
-      return result.rows.map(mapDriverToDomain);
+      return result.map(mapDriverToDomain);
     },
 
     async getById(id) {
-      const result = await client.query<IDriverQueryResult>('SELECT * FROM drivers where id = $1', [id]);
+      const result = await client<IDriverQueryResult>('drivers').where({ id });
 
-      if (result.rowCount === 0) {
+      if (result == null || result.length === 0) {
         throw new DriverDoesNotExistError(id);
       }
 
-      return mapDriverToDomain(result.rows[0]);
+      return mapDriverToDomain(result[0]);
     },
 
     async findByEmail(email) {
-      const result = await client.query<IDriverWorkShiftsQueryResult>(
-        'SELECT ws.id as work_shift_id, ws.*, d.* FROM drivers d LEFT JOIN work_shifts ws on ws.driver_id = d.id WHERE email = $1 ',
-        [email],
-      );
+      const result = await client('drivers')
+        .join('work_shifts', 'drivers.id', 'work_shifts.driver_id')
+        .select('*', 'work_shifts.id as work_shift_id')
+        .where({ email });
 
-      if (result.rowCount === 0) {
+      if (result == null || result.length === 0) {
         throw new DriverDoesNotExistError(email);
       }
 
-      return mapDriversWorkShiftsToDomain(result.rows)[0];
+      return mapDriversWorkShiftsToDomain(result)[0];
     },
   };
 }

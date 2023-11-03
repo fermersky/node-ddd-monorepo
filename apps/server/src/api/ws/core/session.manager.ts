@@ -6,7 +6,7 @@ export interface UserData {
   ipAddress: string;
 }
 
-class SessionManager {
+class WsSessionManager {
   private sessions: Map<string, WebSocket<UserData>>;
   constructor() {
     this.sessions = new Map();
@@ -30,4 +30,4 @@ class SessionManager {
   }
 }
 
-export default new SessionManager();
+export default new WsSessionManager();

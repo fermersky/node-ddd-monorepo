@@ -20,8 +20,8 @@ export type WsRouteHandlers = IWsWorkShiftRouteHandlers | IWsDriverRouteHandlers
 export const routes: WsRouteHandlers = { ...driverRoutes };
 
 export const handleMessage = async (msg: IWsIncomingMessage): WsHandlerResult<object, string> => {
-  const session = await db.connect();
-  const driverService = driver({ db: session, bcrypt });
+  // const session = await db.connect();
+  const driverService = driver({ db, bcrypt });
   const jwt = jwtService();
 
   if (msg.query in driverRoutes) {

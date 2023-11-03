@@ -6,6 +6,10 @@ export interface IRepository<T> {
   // ...other generic repository methods
 }
 
+export interface IKnexDbContext {
+  driverRepository: IDriverRepository;
+}
+
 export interface IDbContext {
   begin(): Promise<void>;
   commit(): Promise<void>;
@@ -18,5 +22,5 @@ export interface IDbContext {
 
   beginTransaction<T>(cb: (session: IDbContext) => Promise<T>): Promise<T>;
 
-  driverRepository: IDriverRepository;
+  // driverRepository: IDriverRepository;
 }

@@ -1,3 +1,4 @@
+import knex from 'knex';
 import pg from 'pg';
 
 const pool = new pg.Pool({
@@ -11,4 +12,16 @@ const pool = new pg.Pool({
 
 console.log('connected to Postgres 🔥');
 
-export default pool;
+export default knex({
+  client: 'pg',
+  pool: {
+    max: 40,
+  },
+  connection: {
+    host: 'localhost',
+    port: 5432,
+    database: 'best_driver_db',
+    user: 'postgres',
+    password: '123',
+  },
+});

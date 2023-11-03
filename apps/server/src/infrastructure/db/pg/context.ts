@@ -1,6 +1,7 @@
+import type { Knex } from 'knex';
 import pg from 'pg';
 
-import type { IDbContext } from '@domain/domain.interface.js';
+import type { IDbContext, IKnexDbContext } from '@domain/domain.interface.js';
 
 import driverRepository from '../repositories/driver/driver.repository.js';
 import { PoolClientDecorator } from './pool-client.js';
@@ -9,7 +10,15 @@ export interface IPgContext {
   connect: () => Promise<IDbContext>;
 }
 
-export default function (pool: pg.Pool): IPgContext {
+export default function (client: Knex): IKnexDbContext {
+  return {
+    get driverRepository() {
+      return driverRepository(client);
+    },
+  };
+}
+
+export function pgContext(pool: pg.Pool): IPgContext {
   return {
     async connect() {
       const client = new PoolClientDecorator(await pool.connect(), {
@@ -29,9 +38,9 @@ export default function (pool: pg.Pool): IPgContext {
           await client.query('ROLLBACK;');
         },
 
-        get driverRepository() {
-          return driverRepository(client);
-        },
+        // get driverRepository() {
+        //   return driverRepository(client);
+        // },
 
         // provide control over the transaction (commit/rollback) to the client code
         async beginTransaction(cb) {

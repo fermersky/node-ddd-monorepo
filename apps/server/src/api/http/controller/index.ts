@@ -12,8 +12,10 @@ const bcrypt = bcryptService();
 
 // http controllers
 export const driverController = async () => {
-  const session = await db.connect();
-  const driverService = driver({ db: session, bcrypt });
+  // in case of using pg pool instead of Knex
+  // const session = await db.connect();
+
+  const driverService = driver({ db, bcrypt });
 
   return driverHttpController({ jwt: jwtHttpService, driverService });
 };
