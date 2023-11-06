@@ -14,7 +14,7 @@ const TryCatchErrors = async (req: FastifyRequest, res: FastifyReply, cb: () => 
   try {
     await cb();
   } catch (error) {
-    console.log(error);
+    console.log(`😫 ${error}`);
 
     if (error instanceof HttpError) {
       const appError = error as HttpError;
@@ -78,7 +78,7 @@ export const ApiHandler =
       const now = new Date().toTimeString();
 
       if (logging) {
-        const msg = `HTTP ${req.method} ${req.url} (requestId: ${requestId}) => ${now} ${req.method} ${req.url}`;
+        const msg = `HTTP ${req.method} ${req.url} (requestId: ${requestId}) ➡️  ${now} ${req.method} ${req.url}`;
         logger.log(msg);
       }
 
@@ -91,7 +91,7 @@ export const ApiHandler =
       const took = performance.measure('request to Now', requestId).duration.toFixed(2);
 
       if (logging) {
-        logger.log(`HTTP (requestId: ${requestId}) <= ${new Date().toTimeString()} took ${took} ms`);
+        logger.log(`HTTP (requestId: ${requestId}) ⬅️  ${new Date().toTimeString()} took ${took} ms`);
       }
 
       if (headers) res.headers(headers);

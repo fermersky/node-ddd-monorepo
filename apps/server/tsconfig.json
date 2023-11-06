@@ -1,6 +1,6 @@
 {
   "extends": "tsconfig/base",
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "knexfile.js"],
   "exclude": ["jest.config.js"],
   "compilerOptions": {
     "paths": {
@@ -8,10 +8,11 @@
       "@infrastructure/*": ["./src/infrastructure/*"],
       "@api/*": ["./src/api/*"]
     },
-    "sourceMap": true,
+    "sourceMap": false,
     "moduleResolution": "NodeNext",
     "module": "NodeNext",
     "verbatimModuleSyntax": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "allowJs": true
   }
 }

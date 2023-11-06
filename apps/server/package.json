@@ -5,7 +5,7 @@
   "main": "./dist/app.js",
   "type": "module",
   "scripts": {
-    "lint": "tsc --noEmit || eslint .",
+    "lint": "tsc --noEmit; pnpm eslint .",
     "format": "pnpm prettier . --write",
     "dev": "run-p dev:*",
     "dev:watch": "tsx watch ./src/app.ts",
@@ -38,6 +38,7 @@
     "npm-run-all": "^4.1.5",
     "prettier": "~3.0.3",
     "rimraf": "^5.0.5",
+    "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.8",
     "tsconfig": "workspace:*",
     "tsx": "^3.14.0",

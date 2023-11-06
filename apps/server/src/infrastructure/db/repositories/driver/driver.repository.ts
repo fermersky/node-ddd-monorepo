@@ -1,6 +1,6 @@
 import type { Knex } from 'knex';
 
-import { DriverDoesNotExistError, type IDriverRepository } from '@domain/driver/index.js';
+import { type Driver, DriverDoesNotExistError, type IDriverRepository } from '@domain/driver/index.js';
 
 import { type IDriverQueryResult, mapDriverToDomain, mapDriversWorkShiftsToDomain } from './types.js';
 
@@ -22,9 +22,24 @@ export default function (client: Knex): IDriverRepository {
       return mapDriverToDomain(result[0]);
     },
 
+    async create(driver) {
+      const result = await client('drivers').insert(
+        {
+          id: driver.id,
+          email: driver.email,
+          password: driver.password,
+          first_name: driver.firstName,
+          last_name: driver.lastName,
+        },
+        '*',
+      );
+
+      return result;
+    },
+
     async findByEmail(email) {
       const result = await client('drivers')
-        .join('work_shifts', 'drivers.id', 'work_shifts.driver_id')
+        .leftJoin('work_shifts', 'drivers.id', 'work_shifts.driver_id')
         .select('*', 'work_shifts.id as work_shift_id')
         .where({ email });
 

@@ -1,4 +1,6 @@
+import bcryptService from '@infrastructure/crypto/bcrypt.service.js';
 import { pool } from '@infrastructure/db/pg/index.js';
+import driverRepository from '@infrastructure/db/repositories/driver/driver.repository.js';
 
 import app from '@api/http/app.js';
 import {

@@ -6,10 +6,7 @@ const EnvSchema = z.object({
   HTTP_PORT: z.coerce.number().default(8000),
   WS_PORT: z.coerce.number().default(8001),
   JWT_SECRET: z.string(),
-  NODE_ENV: z
-    .string()
-    .regex(/^(development|production|test)$/)
-    .default('development'),
+  NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
 });
 
 export interface AppConfig {
@@ -17,7 +14,7 @@ export interface AppConfig {
   httpPort: number;
   wsPort: number;
   jwtSecret: string;
-  nodeEnv: string;
+  nodeEnv: 'development' | 'production' | 'test';
 }
 
 function getConfig(): AppConfig {
