@@ -34,7 +34,7 @@ export default function (client: Knex): IDriverRepository {
         '*',
       );
 
-      return result;
+      return result[0] as Driver;
     },
 
     async findByEmail(email) {

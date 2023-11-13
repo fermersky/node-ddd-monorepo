@@ -13,6 +13,7 @@
     "module": "NodeNext",
     "verbatimModuleSyntax": true,
     "outDir": "./dist",
-    "allowJs": true
+    "allowJs": true,
+    "lib": ["ESNext"]
   }
 }
