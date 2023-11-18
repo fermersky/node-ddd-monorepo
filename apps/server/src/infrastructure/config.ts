@@ -20,6 +20,10 @@ export interface AppConfig {
 function getConfig(): AppConfig {
   const envs = EnvSchema.parse(process.env);
 
+  if (envs.NODE_ENV === 'test') {
+    envs.HTTP_PORT = 0;
+  }
+
   return {
     httpLogging: envs.HTTP_LOGGING === 'true' ? true : false,
     httpPort: Number(envs.HTTP_PORT),

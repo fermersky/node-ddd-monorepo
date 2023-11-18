@@ -47,6 +47,8 @@ export default function (client: Knex): IDriverRepository {
         throw new DriverDoesNotExistError(email);
       }
 
+      console.log({ result });
+
       return mapDriversWorkShiftsToDomain(result)[0];
     },
   };

@@ -36,7 +36,7 @@ const config = {
     connection: {
       host: 'localhost',
       port: 5432,
-      database: 'best_driver_db',
+      database: 'best_driver_db_test',
       user: 'postgres',
       password: '123',
     },

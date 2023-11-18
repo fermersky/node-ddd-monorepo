@@ -1,3 +1,4 @@
+import { appConfig } from '@infrastructure/config.js';
 import bcryptService from '@infrastructure/crypto/bcrypt.service.js';
 import { pool } from '@infrastructure/db/pg/index.js';
 import driverRepository from '@infrastructure/db/repositories/driver/driver.repository.js';
@@ -14,10 +15,26 @@ import { makeAuthenticatedRequest, makeRequest } from './common.js';
 let address: string;
 
 beforeAll(async () => {
-  address = await app.listen({ port: 0 });
+  address = await app.listen({ port: appConfig.httpPort });
+
+  await pool.migrate.latest();
+
+  const password = await bcryptService().hash('123');
+
+  await driverRepository(pool).create({
+    id: '5333c2d3-c83f-4493-979f-fd97ad54f44d',
+    email: 'andrew@mail.com',
+    firstName: 'Dan',
+    lastName: 'also Dan',
+    phone: '38039272037',
+    password,
+  });
 });
 
 afterAll(async () => {
+  await pool.raw(
+    'drop table drivers cascade; drop table work_shifts cascade; drop table migrations cascade; drop table migrations_lock cascade;',
+  );
   await app.close();
   await pool.destroy();
 });

@@ -4,6 +4,6 @@ export default {
   collectCoverage: false,
   displayName: 'Node.js DDD Sample',
   transform: {},
-  testRegex: '(/src/tests/.*|(\\.|/)(test|spec))\\.js?$',
-  testPathIgnorePatterns: ['/node_modules/', 'common.js'],
+  testRegex: '(/dist/tests/.*|(\\.|/)(test|spec))\\.js?$',
+  testPathIgnorePatterns: ['/node_modules/', 'common.js', 'common.ts'],
 };

@@ -5,7 +5,7 @@ import type { Driver } from '@domain/driver/index.js';
 export const GetDriverSchema = z.object({
   id: z.string(),
   email: z.string().email(),
-  phone: z.string().optional(),
+  phone: z.coerce.string().optional(),
   firstName: z.string(),
   lastName: z.string(),
   workShifts: z
