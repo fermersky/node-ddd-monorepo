@@ -1,4 +1,6 @@
-import type { AppConfig } from '@infrastructure/config.js';
+import { inject, injectable } from 'tsyringe';
+
+import { appConfig } from '@infrastructure/config.js';
 import type { IJwtService } from '@infrastructure/crypto/jwt.service.js';
 
 export interface IDriverJwtPayload {
@@ -6,40 +8,35 @@ export interface IDriverJwtPayload {
   id: string;
 }
 
-interface IJwtValidationServiceDeps {
-  jwt: IJwtService;
-  appConfig: AppConfig;
-}
-
 export interface IJwtValidationService {
   validateToken<T = IDriverJwtPayload>(token: string): Promise<T>;
   createToken<T extends object>(payload: T): Promise<string>;
 }
 
-export default function ({ jwt, appConfig }: IJwtValidationServiceDeps): IJwtValidationService {
-  return {
-    async validateToken<T>(token: string): Promise<T> {
-      try {
-        const tokenValid = await jwt.verify<T>(token, appConfig.jwtSecret);
+@injectable()
+export class JwtValidationService implements IJwtValidationService {
+  constructor(@inject('IJwtService') private jwt: IJwtService) {}
 
-        if (!tokenValid) {
-          throw new Error('Token verification failed');
-        }
+  async validateToken<T = IDriverJwtPayload>(token: string): Promise<T> {
+    try {
+      const tokenValid = await this.jwt.verify<T>(token, appConfig.jwtSecret);
 
-        return tokenValid;
-      } catch (error) {
-        console.log(error);
-
+      if (!tokenValid) {
         throw new Error('Token verification failed');
       }
-    },
 
-    async createToken(payload) {
-      const token = await jwt.sign(payload, appConfig.jwtSecret, {
-        expiresIn: Date.now() + 15 * 60 * 1000,
-      });
+      return tokenValid;
+    } catch (error) {
+      console.log(error);
 
-      return token as string;
-    },
-  };
+      throw new Error('Token verification failed');
+    }
+  }
+  async createToken<T extends object>(payload: T): Promise<string> {
+    const token = await this.jwt.sign(payload, appConfig.jwtSecret, {
+      expiresIn: Date.now() + 15 * 60 * 1000,
+    });
+
+    return token as string;
+  }
 }

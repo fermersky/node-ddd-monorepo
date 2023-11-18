@@ -3,7 +3,7 @@ import { ZodError, z } from 'zod';
 
 import { DomainError } from '@domain/domain.errors.js';
 
-import { randomService } from '@infrastructure/crypto/index.js';
+import randomService from '@infrastructure/crypto/random.service.js';
 
 import type { FastifyRouteHandlerFn } from '../controller/controller.types.js';
 import { HttpError } from './http.errors.js';

@@ -1,9 +1,6 @@
 import { z } from 'zod';
 
-import type { Driver, IDriverService } from '@domain/driver/index.js';
-
-import type { AppConfig } from '@infrastructure/config.js';
-import type { IJwtService } from '@infrastructure/crypto/jwt.service.js';
+import type { Driver } from '@domain/driver/index.js';
 
 export const WsMessageSchema = z.object({
   query: z.string(),
@@ -12,7 +9,7 @@ export const WsMessageSchema = z.object({
 
 export interface IWsIncomingMessage {
   params: any;
-  query: string;
+  query: 'getAllDrivers' | 'me';
 }
 
 export interface IWsHandlerResult<TSchema, TEvent> {
@@ -21,53 +18,34 @@ export interface IWsHandlerResult<TSchema, TEvent> {
   event: TEvent;
 }
 
-export type WsHandlerResult<T, Q> = Promise<IWsHandlerResult<T, Q>>;
-
 export const GetAllDriversParamsSchema = z.object({
   skip: z.number().default(0),
   take: z.number().default(5),
 });
-
-export type GetAllDriversParams = z.infer<typeof GetAllDriversParamsSchema>;
-
-export interface IWsHandlerDeps {
-  driverService: IDriverService;
-  jwt: IJwtService;
-  appConfig: AppConfig;
-}
 
 export const DriverLoginSchema = z.object({
   email: z.string(),
   password: z.string(),
 });
 
-export type DriverLoginParams = z.infer<typeof DriverLoginSchema>;
-
 export const DriverMeSchema = z.object({
   token: z.string(),
 });
 
+export type WsHandlerResult<T, Q> = Promise<IWsHandlerResult<T, Q>>;
+
+export type GetAllDriversParams = z.infer<typeof GetAllDriversParamsSchema>;
+export type DriverLoginParams = z.infer<typeof DriverLoginSchema>;
 export type DriverMeParams = z.infer<typeof DriverMeSchema>;
 
-export type WsLoginHandler = (
-  params: DriverLoginParams,
-  deps: IWsHandlerDeps,
-) => WsHandlerResult<{ token: string }, 'login'>;
-
-export type WsGetAllDriversHandler = (
-  params: GetAllDriversParams,
-  deps: IWsHandlerDeps,
-) => WsHandlerResult<GetDriverResult[], 'getAllDrivers'>;
-
-export type WsMeHandler = (
-  params: DriverMeParams,
-  deps: IWsHandlerDeps,
-) => WsHandlerResult<GetDriverResult, 'me'>;
+export type WsLoginHandlerResult = WsHandlerResult<{ token: string }, 'login'>;
+export type WsGetAllDriversWsHandlerResult = WsHandlerResult<GetDriverResult[], 'getAllDrivers'>;
+export type WsMeHandlerResult = WsHandlerResult<GetDriverResult, 'me'>;
 
 export interface IWsDriverRouteHandlers {
-  login: WsLoginHandler;
-  getAllDrivers: WsGetAllDriversHandler;
-  me: WsMeHandler;
+  login(params: DriverLoginParams): WsLoginHandlerResult;
+  getAllDrivers(params: GetAllDriversParams): WsGetAllDriversWsHandlerResult;
+  me(params: DriverMeParams): WsMeHandlerResult;
 }
 
 export interface IWsWorkShiftRouteHandlers {

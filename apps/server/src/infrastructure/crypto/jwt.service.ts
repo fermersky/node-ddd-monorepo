@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { injectable } from 'tsyringe';
 
 export interface IJwtService {
   /**
@@ -22,30 +23,32 @@ export interface IJwtService {
   verify<T>(token: string, secretOrPublicKey: jwt.Secret | jwt.GetPublicKeyOrSecret): Promise<T>;
 }
 
-export default function (): IJwtService {
-  return {
-    async sign(payload, secretOrPrivateKey, options) {
-      return new Promise((resolve, reject) => {
-        jwt.sign(payload, secretOrPrivateKey, options, (error, encoded) => {
-          if (error) {
-            reject(error);
-          }
+@injectable()
+export class JwtService implements IJwtService {
+  async sign(
+    payload: string | object | Buffer,
+    secretOrPrivateKey: jwt.Secret,
+    options: jwt.SignOptions,
+  ): Promise<string | undefined> {
+    return new Promise((resolve, reject) => {
+      jwt.sign(payload, secretOrPrivateKey, options, (error, encoded) => {
+        if (error) {
+          reject(error);
+        }
 
-          resolve(encoded);
-        });
+        resolve(encoded);
       });
-    },
+    });
+  }
+  verify<T>(token: string, secretOrPublicKey: jwt.Secret | jwt.GetPublicKeyOrSecret): Promise<T> {
+    return new Promise((resolve, reject) => {
+      jwt.verify(token, secretOrPublicKey, (error, encoded) => {
+        if (error) {
+          reject(error);
+        }
 
-    async verify<T>(token: string, secretOrPublicKey: jwt.Secret | jwt.GetPublicKeyOrSecret): Promise<T> {
-      return new Promise((resolve, reject) => {
-        jwt.verify(token, secretOrPublicKey, (error, encoded) => {
-          if (error) {
-            reject(error);
-          }
-
-          resolve(encoded as T);
-        });
+        resolve(encoded as T);
       });
-    },
-  };
+    });
+  }
 }

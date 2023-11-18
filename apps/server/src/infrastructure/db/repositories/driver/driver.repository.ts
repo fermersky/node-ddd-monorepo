@@ -4,52 +4,52 @@ import { type Driver, DriverDoesNotExistError, type IDriverRepository } from '@d
 
 import { type IDriverQueryResult, mapDriverToDomain, mapDriversWorkShiftsToDomain } from './types.js';
 
-export default function (client: Knex): IDriverRepository {
-  return {
-    async getAll() {
-      const result = await client<IDriverQueryResult>('drivers').select('*');
+export class KnexDriverRepository implements IDriverRepository {
+  constructor(private client: Knex) {}
 
-      return result.map(mapDriverToDomain);
-    },
+  async getAll() {
+    const result = await this.client<IDriverQueryResult>('drivers').select('*');
 
-    async getById(id) {
-      const result = await client<IDriverQueryResult>('drivers').where({ id });
+    return result.map(mapDriverToDomain);
+  }
 
-      if (result == null || result.length === 0) {
-        throw new DriverDoesNotExistError(id);
-      }
+  async getById(id: string) {
+    const result = await this.client<IDriverQueryResult>('drivers').where({ id });
 
-      return mapDriverToDomain(result[0]);
-    },
+    if (result == null || result.length === 0) {
+      throw new DriverDoesNotExistError(id);
+    }
 
-    async create(driver) {
-      const result = await client('drivers').insert(
-        {
-          id: driver.id,
-          email: driver.email,
-          password: driver.password,
-          first_name: driver.firstName,
-          last_name: driver.lastName,
-        },
-        '*',
-      );
+    return mapDriverToDomain(result[0]);
+  }
 
-      return result[0] as Driver;
-    },
+  async create(driver: Driver) {
+    const result = await this.client('drivers').insert(
+      {
+        id: driver.id,
+        email: driver.email,
+        password: driver.password,
+        first_name: driver.firstName,
+        last_name: driver.lastName,
+      },
+      '*',
+    );
 
-    async findByEmail(email) {
-      const result = await client('drivers')
-        .leftJoin('work_shifts', 'drivers.id', 'work_shifts.driver_id')
-        .select('*', 'work_shifts.id as work_shift_id')
-        .where({ email });
+    return result[0] as Driver;
+  }
 
-      if (result == null || result.length === 0) {
-        throw new DriverDoesNotExistError(email);
-      }
+  async findByEmail(email: string) {
+    const result = await this.client('drivers')
+      .leftJoin('work_shifts', 'drivers.id', 'work_shifts.driver_id')
+      .select('*', 'work_shifts.id as work_shift_id')
+      .where({ email });
 
-      console.log({ result });
+    if (result == null || result.length === 0) {
+      throw new DriverDoesNotExistError(email);
+    }
 
-      return mapDriversWorkShiftsToDomain(result)[0];
-    },
-  };
+    console.log({ result });
+
+    return mapDriversWorkShiftsToDomain(result)[0];
+  }
 }

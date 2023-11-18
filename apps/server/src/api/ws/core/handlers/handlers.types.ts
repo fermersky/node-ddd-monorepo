@@ -16,7 +16,7 @@ export type upgradeHandler = (
   context: us_socket_context_t,
 ) => Promise<void>;
 
-export interface WsHandlers {
+export interface IWsHandlers {
   open: openHandler;
   message: messageHandler;
   drain: drainHandler;

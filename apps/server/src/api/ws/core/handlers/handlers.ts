@@ -1,18 +1,24 @@
+import { inject, injectable } from 'tsyringe';
+import type { HttpRequest, HttpResponse, WebSocket, us_socket_context_t } from 'uWebSockets.js';
+
 import { type IWsIncomingMessage, WsMessageSchema } from '../routes/driver/driver.routes.types.js';
 import { handleMessage } from '../routes/routes.js';
-import { jwtWsService } from '../services/index.js';
+import type { IJwtWsService } from '../services/jwt-ws.service.js';
 import wsSessionManager, { type UserData } from '../session.manager.js';
-import type { WsHandlers } from './handlers.types.js';
+import type { IWsHandlers } from './handlers.types.js';
 
-export const handlers: WsHandlers = {
-  open: (ws) => {
+@injectable()
+export class WsHandlers implements IWsHandlers {
+  constructor(@inject('IJwtWsService') private jwtWsService: IJwtWsService) {}
+
+  open(ws: WebSocket<UserData>) {
     const { id } = ws.getUserData();
     wsSessionManager.set(id, ws);
 
     console.log(`Established new WS connection ${id}`);
-  },
+  }
 
-  message: async (ws, message, isBinary) => {
+  async message(ws: WebSocket<UserData>, message: ArrayBuffer, isBinary: boolean) {
     try {
       const messageJson = JSON.parse(new TextDecoder('utf8').decode(message)) as IWsIncomingMessage;
 
@@ -25,20 +31,20 @@ export const handlers: WsHandlers = {
       ws.send(JSON.stringify({ error: 400 }));
       console.log(er);
     }
-  },
+  }
 
-  drain: (ws) => {
+  drain(ws: WebSocket<UserData>) {
     console.log('WebSocket backpressure: ' + ws.getBufferedAmount());
-  },
+  }
 
-  close: (ws, code, message) => {
+  close(ws: WebSocket<UserData>, code: number, message: ArrayBuffer) {
     const { id } = ws.getUserData();
     wsSessionManager.delete(id);
 
     console.log(`WebSocket closed, Goodbye ${id}`);
-  },
+  }
 
-  upgrade: async (res, req, context) => {
+  async upgrade(res: HttpResponse, req: HttpRequest, context: us_socket_context_t) {
     console.log('An Http connection wants to become WebSocket, URL: ' + req.getUrl() + '!');
 
     const upgradeAborted = { aborted: false };
@@ -52,7 +58,7 @@ export const handlers: WsHandlers = {
     });
 
     try {
-      const userData = await jwtWsService.validateRequest(req);
+      const userData = await this.jwtWsService.validateRequest(req);
 
       if (upgradeAborted.aborted) {
         console.log('Ouch! Client disconnected before we could upgrade it!');
@@ -74,10 +80,12 @@ export const handlers: WsHandlers = {
         );
       });
     } catch (er) {
+      console.log(er);
+
       res
         .writeStatus('401')
         .writeHeader('Content-Type', 'application/json')
         .end(JSON.stringify({ error: 'authorization is failed' }));
     }
-  },
-};
+  }
+}

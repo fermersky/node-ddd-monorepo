@@ -1,10 +1,12 @@
+import 'reflect-metadata';
+
 import { appConfig } from '@infrastructure/config.js';
 
-import app from '@api/http/app.js';
+// import app from '@api/http/app.js';
 import uWSapp from '@api/ws/app.js';
 
 // start HTTP
-app.listen({ port: appConfig.httpPort });
+// app.listen({ port: appConfig.httpPort });
 
 // start WebSocket
 uWSapp.listen(appConfig.wsPort, (socket) => {

@@ -1,27 +1,26 @@
 import bcrypt from 'bcrypt';
+import { injectable } from 'tsyringe';
 
 export interface IBcryptService {
   compare(password: string | Buffer, hash: string): Promise<boolean>;
   hash(raw: string): Promise<string>;
 }
 
-export default function (): IBcryptService {
-  return {
-    async hash(raw) {
-      const salt = await bcrypt.genSalt();
-      return bcrypt.hash(raw, salt);
-    },
+@injectable()
+export class BcryptService implements IBcryptService {
+  compare(password: string | Buffer, hash: string): Promise<boolean> {
+    return new Promise((resolve, reject) => {
+      bcrypt.compare(password, hash, (err, same) => {
+        if (err) {
+          reject(err);
+        }
 
-    async compare(password, hash) {
-      return new Promise((resolve, reject) => {
-        bcrypt.compare(password, hash, (err, same) => {
-          if (err) {
-            reject(err);
-          }
-
-          resolve(same);
-        });
+        resolve(same);
       });
-    },
-  };
+    });
+  }
+  async hash(raw: string): Promise<string> {
+    const salt = await bcrypt.genSalt();
+    return bcrypt.hash(raw, salt);
+  }
 }

@@ -3,7 +3,6 @@ import { z } from 'zod';
 import { WorkShiftSchema } from '@domain/work_shift/index.js';
 
 import { EntitySchema } from '../domain.entity.js';
-import driverService from './driver.service.js';
 
 export const DriverSchema = EntitySchema.extend({
   password: z.string(),
@@ -16,7 +15,6 @@ export const DriverSchema = EntitySchema.extend({
 
 export type Driver = z.infer<typeof DriverSchema>;
 
-export { driverService };
-
 export * from './driver.interface.js';
 export * from './driver.errors.js';
+export * from './driver.service.js';

@@ -1,44 +1,45 @@
+import { inject, injectable } from 'tsyringe';
+
 import { CouldNotAuthenticateDriver, DriverDoesNotExistError } from '@domain/driver/driver.errors.js';
 import type { IDriverService } from '@domain/driver/driver.interface.js';
-import type { IKnexDbContext } from '@domain/index.js';
+import type { IDbContext } from '@domain/index.js';
 
 import type { IBcryptService } from '@infrastructure/crypto/bcrypt.service.js';
 
-interface IDriverServiceDeps {
-  db: IKnexDbContext;
-  bcrypt: IBcryptService;
-}
+import type { Driver } from './index.js';
 
-export default function ({ db, bcrypt }: IDriverServiceDeps): IDriverService {
-  return {
-    async getAll() {
-      return await db.driverRepository.getAll();
-    },
+@injectable()
+export class DriverService implements IDriverService {
+  constructor(
+    @inject('IDbContext') private db: IDbContext,
+    @inject('IBcryptService') private bcrypt: IBcryptService,
+  ) {}
 
-    async findByEmail(email) {
-      const driver = await db.driverRepository.findByEmail(email);
+  async getAll(): Promise<Driver[]> {
+    return await this.db.driverRepository.getAll();
+  }
+  async findByEmail(email: string): Promise<Driver> {
+    const driver = await this.db.driverRepository.findByEmail(email);
 
-      if (!driver) {
-        throw new DriverDoesNotExistError(email);
-      }
+    if (!driver) {
+      throw new DriverDoesNotExistError(email);
+    }
 
-      return driver;
-    },
+    return driver;
+  }
+  async authenticate(email: string, password: string): Promise<Driver> {
+    const driver = await this.db.driverRepository.findByEmail(email);
 
-    async authenticate(email, password) {
-      const driver = await db.driverRepository.findByEmail(email);
-
-      if (driver == null) {
-        throw new CouldNotAuthenticateDriver();
-      }
-
-      const passwordValid = await bcrypt.compare(password, driver.password);
-
-      if (passwordValid) {
-        return driver;
-      }
-
+    if (driver == null) {
       throw new CouldNotAuthenticateDriver();
-    },
-  };
+    }
+
+    const passwordValid = await this.bcrypt.compare(password, driver.password);
+
+    if (passwordValid) {
+      return driver;
+    }
+
+    throw new CouldNotAuthenticateDriver();
+  }
 }

@@ -1,21 +1,13 @@
-import driver from '@domain/driver/driver.service.js';
+import { container } from 'tsyringe';
 
-import { bcryptService } from '@infrastructure/crypto/index.js';
-import { context, pool } from '@infrastructure/db/pg/index.js';
+import type { IDriverService } from '@domain/driver/index.js';
 
-import { jwtHttpService } from '../core/services/index.js';
+import type { IJwtHttpService } from '../core/services/jwt-http.service.js';
 import driverHttpController from './driver/driver.controller.js';
 
-// infrastructure
-const db = context(pool);
-const bcrypt = bcryptService();
-
-// http controllers
 export const driverController = async () => {
-  // in case of using pg pool instead of Knex
-  // const session = await db.connect();
-
-  const driverService = driver({ db, bcrypt });
+  const driverService = container.resolve<IDriverService>('IDriverService');
+  const jwtHttpService = container.resolve<IJwtHttpService>('IJwtHttpService');
 
   return driverHttpController({ jwt: jwtHttpService, driverService });
 };

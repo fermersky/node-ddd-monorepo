@@ -1,6 +1,10 @@
+import { container } from 'tsyringe';
 import uWS from 'uWebSockets.js';
 
-import { handlers } from './core/handlers/handlers.js';
+import '../shared/dependency-tree.js';
+import { WsHandlers } from './core/handlers/handlers.js';
+
+const handlers = container.resolve(WsHandlers);
 
 const app = uWS
   .App({})
@@ -13,11 +17,11 @@ const app = uWS
     maxPayloadLength: 16 * 1024 * 1024,
     idleTimeout: 10,
 
-    open: handlers.open,
-    upgrade: handlers.upgrade,
-    close: handlers.close,
-    drain: handlers.drain,
-    message: handlers.message,
+    open: handlers.open.bind(handlers),
+    upgrade: handlers.upgrade.bind(handlers),
+    close: handlers.close.bind(handlers),
+    drain: handlers.drain.bind(handlers),
+    message: handlers.message.bind(handlers),
   });
 
 export default app;
