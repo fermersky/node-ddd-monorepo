@@ -8,7 +8,7 @@ const handlers = container.resolve(WsHandlers);
 
 const app = uWS
   .App({})
-  .get('/anything', (res, req) => {
+  .get('/anything', (res) => {
     console.log('plain http request');
     res.end('hi');
   })

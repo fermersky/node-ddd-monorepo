@@ -37,7 +37,7 @@ export class WsHandlers implements IWsHandlers {
     console.log('WebSocket backpressure: ' + ws.getBufferedAmount());
   }
 
-  close(ws: WebSocket<UserData>, code: number, message: ArrayBuffer) {
+  close(ws: WebSocket<UserData>) {
     const { id } = ws.getUserData();
     wsSessionManager.delete(id);
 

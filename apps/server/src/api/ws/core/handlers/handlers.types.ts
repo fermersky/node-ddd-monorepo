@@ -8,7 +8,8 @@ export type messageHandler = (ws: WebSocket<UserData>, message: ArrayBuffer, isB
 
 export type drainHandler = (ws: WebSocket<UserData>) => void;
 
-export type closeHandler = (ws: WebSocket<UserData>, code: number, message: ArrayBuffer) => void;
+export type closeHandler = (ws: WebSocket<UserData>) => void;
+// export type closeHandler = (ws: WebSocket<UserData>, code: number, message: ArrayBuffer) => void;
 
 export type upgradeHandler = (
   res: HttpResponse,

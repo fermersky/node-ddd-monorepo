@@ -1,4 +1,5 @@
 import type { FastifyRequest } from 'fastify';
+import { inject, injectable } from 'tsyringe';
 
 import type {
   IDriverJwtPayload,
@@ -7,37 +8,34 @@ import type {
 
 import { HttpUnauthorized } from '../http.errors.js';
 
-interface IJwtHttpServiceDeps {
-  jwt: IJwtValidationService;
-}
-
 export interface IJwtHttpService {
   validateRequest<T = IDriverJwtPayload>(req: FastifyRequest): Promise<T>;
   createToken<T extends object>(payload: T): Promise<string>;
 }
 
-export default function jwtHttpService({ jwt }: IJwtHttpServiceDeps): IJwtHttpService {
-  return {
-    async validateRequest<T>(req: FastifyRequest): Promise<T> {
-      try {
-        const token = req.headers['authorization']?.split(' ')[1];
+@injectable()
+export class JwtHttpService implements IJwtHttpService {
+  constructor(@inject('IJwtValidationService') private jwt: IJwtValidationService) {}
 
-        if (token == null) {
-          throw new HttpUnauthorized('Token is missing');
-        }
+  async validateRequest<T = IDriverJwtPayload>(req: FastifyRequest): Promise<T> {
+    try {
+      const token = req.headers['authorization']?.split(' ')[1];
 
-        const tokenValid = await jwt.validateToken(token);
-
-        return tokenValid as T;
-      } catch (error) {
-        console.log(error);
-
-        throw new HttpUnauthorized('Token verification failed');
+      if (token == null) {
+        throw new HttpUnauthorized('Token is missing');
       }
-    },
 
-    async createToken(payload) {
-      return await jwt.createToken(payload);
-    },
-  };
+      const tokenValid = await this.jwt.validateToken(token);
+
+      return tokenValid as T;
+    } catch (error) {
+      console.log(error);
+
+      throw new HttpUnauthorized('Token verification failed');
+    }
+  }
+
+  async createToken<T extends object>(payload: T): Promise<string> {
+    return await this.jwt.createToken(payload);
+  }
 }
