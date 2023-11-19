@@ -1,6 +1,7 @@
 import { inject, injectable } from 'tsyringe';
 import uWS from 'uWebSockets.js';
 
+import { DI } from '@api/shared/dependencies.js';
 import type { IDriverJwtPayload, IJwtValidationService } from '@api/shared/services/index.js';
 
 export interface IJwtWsService {
@@ -10,7 +11,7 @@ export interface IJwtWsService {
 
 @injectable()
 export class JwtWsService implements IJwtWsService {
-  constructor(@inject('IJwtValidationService') private jwt: IJwtValidationService) {}
+  constructor(@inject(DI.JwtValidationService) private jwt: IJwtValidationService) {}
 
   async validateRequest<T = IDriverJwtPayload>(req: uWS.HttpRequest): Promise<T> {
     try {

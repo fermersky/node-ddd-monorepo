@@ -3,6 +3,8 @@ import { inject, injectable } from 'tsyringe';
 import { appConfig } from '@infrastructure/config.js';
 import type { IJwtService } from '@infrastructure/crypto/jwt.service.js';
 
+import { DI } from '../dependencies.js';
+
 export interface IDriverJwtPayload {
   email: string;
   id: string;
@@ -15,7 +17,7 @@ export interface IJwtValidationService {
 
 @injectable()
 export class JwtValidationService implements IJwtValidationService {
-  constructor(@inject('IJwtService') private jwt: IJwtService) {}
+  constructor(@inject(DI.JwtService) private jwt: IJwtService) {}
 
   async validateToken<T = IDriverJwtPayload>(token: string): Promise<T> {
     try {

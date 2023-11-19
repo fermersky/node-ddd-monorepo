@@ -4,6 +4,7 @@ import { inject, injectable } from 'tsyringe';
 import type { IDriverService } from '@domain/driver/index.js';
 
 import type { IJwtHttpService } from '@api/http/core/services/jwt-http.service.js';
+import { DI } from '@api/shared/dependencies.js';
 
 import type { FastifyHandlerResult } from '../controller.types.js';
 import type { IDriverController } from './driver.controller.types.js';
@@ -18,8 +19,8 @@ import {
 @injectable()
 export class DriverController implements IDriverController {
   constructor(
-    @inject('IJwtHttpService') private jwt: IJwtHttpService,
-    @inject('IDriverService') private driverService: IDriverService,
+    @inject(DI.JwtHttpService) private jwt: IJwtHttpService,
+    @inject(DI.DriverService) private driverService: IDriverService,
   ) {}
 
   async getAll(req: FastifyRequest): FastifyHandlerResult<GetDriversResponseBody> {

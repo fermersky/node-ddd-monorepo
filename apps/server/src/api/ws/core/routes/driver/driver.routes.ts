@@ -2,7 +2,7 @@ import { inject, injectable } from 'tsyringe';
 
 import type { IDriverService } from '@domain/driver/index.js';
 
-import type { IJwtService } from '@infrastructure/crypto/jwt.service.js';
+import { DI } from '@api/shared/dependencies.js';
 
 import { type IJwtWsService } from '../../services/index.js';
 import type { UserData } from '../../session.manager.js';
@@ -23,9 +23,8 @@ import {
 @injectable()
 export class WsDriverRouteHandlers implements IWsDriverRouteHandlers {
   constructor(
-    @inject('IJwtWsService') private jwtWsService: IJwtWsService,
-    @inject('IJwtService') private jwt: IJwtService,
-    @inject('IDriverService') private driverService: IDriverService,
+    @inject(DI.JwtWsService) private jwtWsService: IJwtWsService,
+    @inject(DI.DriverService) private driverService: IDriverService,
   ) {}
 
   async login(params: DriverLoginParams): WsLoginHandlerResult {

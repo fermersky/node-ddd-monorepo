@@ -1,6 +1,7 @@
 import type { FastifyRequest } from 'fastify';
 import { inject, injectable } from 'tsyringe';
 
+import { DI } from '@api/shared/dependencies.js';
 import type {
   IDriverJwtPayload,
   IJwtValidationService,
@@ -15,7 +16,7 @@ export interface IJwtHttpService {
 
 @injectable()
 export class JwtHttpService implements IJwtHttpService {
-  constructor(@inject('IJwtValidationService') private jwt: IJwtValidationService) {}
+  constructor(@inject(DI.JwtValidationService) private jwt: IJwtValidationService) {}
 
   async validateRequest<T = IDriverJwtPayload>(req: FastifyRequest): Promise<T> {
     try {

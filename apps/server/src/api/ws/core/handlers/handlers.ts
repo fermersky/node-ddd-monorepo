@@ -1,6 +1,8 @@
 import { inject, injectable } from 'tsyringe';
 import type { HttpRequest, HttpResponse, WebSocket, us_socket_context_t } from 'uWebSockets.js';
 
+import { DI } from '@api/shared/dependencies.js';
+
 import { type IWsIncomingMessage, WsMessageSchema } from '../routes/driver/driver.routes.types.js';
 import { handleMessage } from '../routes/routes.js';
 import type { IJwtWsService } from '../services/jwt-ws.service.js';
@@ -9,7 +11,7 @@ import type { IWsHandlers } from './handlers.types.js';
 
 @injectable()
 export class WsHandlers implements IWsHandlers {
-  constructor(@inject('IJwtWsService') private jwtWsService: IJwtWsService) {}
+  constructor(@inject(DI.JwtWsService) private jwtWsService: IJwtWsService) {}
 
   open(ws: WebSocket<UserData>) {
     const { id } = ws.getUserData();

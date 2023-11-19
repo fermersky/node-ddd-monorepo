@@ -1,5 +1,7 @@
 import { container, inject, injectable } from 'tsyringe';
 
+import { DI } from '@api/shared/dependencies.js';
+
 import type { UserData } from '../session.manager.js';
 import {
   type IWsDriverRouteHandlers,
@@ -9,7 +11,7 @@ import {
 
 @injectable()
 export class WsHandlers {
-  constructor(@inject('IWsDriverRouteHandlers') private driverRoutes: IWsDriverRouteHandlers) {}
+  constructor(@inject(DI.WsDriverRouteHandlers) private driverRoutes: IWsDriverRouteHandlers) {}
 
   resolve(query: keyof IWsDriverRouteHandlers) {
     if (query in this.driverRoutes) {

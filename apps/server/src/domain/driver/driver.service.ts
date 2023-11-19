@@ -6,13 +6,15 @@ import type { IDbContext } from '@domain/index.js';
 
 import { type IBcryptService } from '@infrastructure/crypto/bcrypt.service.js';
 
+import { DI } from '@api/shared/dependencies.js';
+
 import type { Driver } from './index.js';
 
 @injectable()
 export class DriverService implements IDriverService {
   constructor(
-    @inject('IDbContext') private db: IDbContext,
-    @inject('IBcryptService') private bcrypt: IBcryptService,
+    @inject(DI.DbContext) private db: IDbContext,
+    @inject(DI.BcryptService) private bcrypt: IBcryptService,
   ) {}
 
   async getAll(): Promise<Driver[]> {

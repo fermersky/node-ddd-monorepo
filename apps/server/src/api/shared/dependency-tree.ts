@@ -13,22 +13,23 @@ import { WsHandlers } from '@api/ws/core/handlers/handlers.js';
 import { WsDriverRouteHandlers } from '@api/ws/core/routes/driver/driver.routes.js';
 import { JwtWsService } from '@api/ws/core/services/jwt-ws.service.js';
 
+import { DI } from './dependencies.js';
 import { JwtValidationService } from './services/jwt-validation.service.js';
 
 // domain
-container.register('IDriverService', { useClass: DriverService });
+container.register(DI.DriverService, { useClass: DriverService });
 
 // infrastructure
-container.register('IBcryptService', { useClass: BcryptService });
-container.register('IJwtService', { useClass: JwtService });
-container.register('IJwtValidationService', { useClass: JwtValidationService });
-container.register('IJwtWsService', { useClass: JwtWsService });
-container.register('IJwtHttpService', { useClass: JwtHttpService });
-container.register('IDbContext', { useValue: new KnexDbContext(pool) });
+container.register(DI.BcryptService, { useClass: BcryptService });
+container.register(DI.JwtService, { useClass: JwtService });
+container.register(DI.JwtValidationService, { useClass: JwtValidationService });
+container.register(DI.JwtWsService, { useClass: JwtWsService });
+container.register(DI.JwtHttpService, { useClass: JwtHttpService });
+container.register(DI.DbContext, { useValue: new KnexDbContext(pool) });
 
 // api
-container.register('IWsDriverRouteHandlers', { useClass: WsDriverRouteHandlers });
-container.register('IWsHandlers', { useClass: WsHandlers });
-container.register('IDriverController', { useClass: DriverController });
+container.register(DI.WsDriverRouteHandlers, { useClass: WsDriverRouteHandlers });
+container.register(DI.WsHandlers, { useClass: WsHandlers });
+container.register(DI.DriverController, { useClass: DriverController });
 
 console.log('dependency tree initialized 🌲');
