@@ -4,19 +4,21 @@ import type { IDriverService } from '@domain/driver/index.js';
 
 import { DI } from '@api/shared/dependencies.js';
 
-import { type IJwtWsService } from '../../services/index.js';
+import type { IJwtWsService } from '../../services/index.js';
 import type { UserData } from '../../session.manager.js';
+import type {
+  DriverLoginParams,
+  DriverMeParams,
+  GetAllDriversParams,
+  IWsDriverRouteHandlers,
+  WsGetAllDriversWsHandlerResult,
+  WsLoginHandlerResult,
+  WsMeHandlerResult,
+} from './driver.routes.types.js';
 import {
-  type DriverLoginParams,
   DriverLoginSchema,
-  type DriverMeParams,
   DriverMeSchema,
-  type GetAllDriversParams,
   GetAllDriversParamsSchema,
-  type IWsDriverRouteHandlers,
-  type WsGetAllDriversWsHandlerResult,
-  type WsLoginHandlerResult,
-  type WsMeHandlerResult,
   fromDomain,
 } from './driver.routes.types.js';
 

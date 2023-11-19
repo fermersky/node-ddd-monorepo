@@ -3,10 +3,10 @@ import { container, inject, injectable } from 'tsyringe';
 import { DI } from '@api/shared/dependencies.js';
 
 import type { UserData } from '../session.manager.js';
-import {
-  type IWsDriverRouteHandlers,
-  type IWsIncomingMessage,
-  type WsHandlerResult,
+import type {
+  IWsDriverRouteHandlers,
+  IWsIncomingMessage,
+  WsHandlerResult,
 } from './driver/driver.routes.types.js';
 
 @injectable()

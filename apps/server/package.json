@@ -5,7 +5,7 @@
   "main": "./dist/app.js",
   "type": "module",
   "scripts": {
-    "lint": "tsc --noEmit; pnpm eslint .",
+    "lint": "pnpm tsc --noEmit; pnpm eslint .",
     "format": "pnpm prettier . --write",
     "dev": "run-p dev:*",
     "dev:watch": "tsx watch ./src/app.ts",
@@ -24,7 +24,6 @@
     "jsonwebtoken": "^9.0.1",
     "knex": "^3.0.1",
     "pg": "^8.11.2",
-    "tap-spec-emoji": "^6.1.2",
     "tsyringe": "^4.8.0",
     "uWebSockets.js": "github:uNetworking/uWebSockets.js#v20.31.0",
     "zod": "^3.21.4"
@@ -41,13 +40,10 @@
     "prettier": "~3.0.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.5",
-    "tap-diff": "^0.1.1",
-    "tap-spec": "^5.0.0",
-    "tap-summary": "^4.0.0",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.8",
     "tsconfig": "workspace:*",
     "tsx": "^3.14.0",
-    "typescript": "^5.1.6"
+    "typescript": "~5.1.0"
   }
 }
