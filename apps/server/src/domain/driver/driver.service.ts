@@ -4,7 +4,7 @@ import { CouldNotAuthenticateDriver, DriverDoesNotExistError } from '@domain/dri
 import type { IDriverService } from '@domain/driver/driver.interface.js';
 import type { IDbContext } from '@domain/index.js';
 
-import type { IBcryptService } from '@infrastructure/crypto/bcrypt.service.js';
+import { type IBcryptService } from '@infrastructure/crypto/bcrypt.service.js';
 
 import type { Driver } from './index.js';
 
@@ -18,6 +18,7 @@ export class DriverService implements IDriverService {
   async getAll(): Promise<Driver[]> {
     return await this.db.driverRepository.getAll();
   }
+
   async findByEmail(email: string): Promise<Driver> {
     const driver = await this.db.driverRepository.findByEmail(email);
 

@@ -1,10 +1,8 @@
 import expect from 'node:assert';
 import { after, before, describe, test } from 'node:test';
 import 'reflect-metadata';
-import { container } from 'tsyringe';
 
 import { appConfig } from '@infrastructure/config.js';
-import { type IBcryptService } from '@infrastructure/crypto/bcrypt.service.js';
 import { KnexDbContext } from '@infrastructure/db/pg/context.js';
 import { pool } from '@infrastructure/db/pg/index.js';
 
@@ -15,27 +13,19 @@ import {
   GetDriversSchema,
 } from '@api/http/controller/driver/driver.dto.js';
 
-import { makeAuthenticatedRequest, makeRequest } from './common.js';
+import { makeAuthenticatedRequest, makeRequest } from './util/common.js';
+import { randomDriver } from './util/driver.faker.js';
 
 const shared = { address: '' };
-const bcryptService = container.resolve<IBcryptService>('IBcryptService');
 const dbContext = new KnexDbContext(pool);
 
 before(async () => {
   shared.address = await app.listen({ port: appConfig.httpPort });
 
   await pool.migrate.latest();
+  const driver = await randomDriver({ password: '123', email: 'andrew@mail.com' });
 
-  const password = await bcryptService.hash('123');
-
-  await dbContext.driverRepository.create({
-    id: '5333c2d3-c83f-4493-979f-fd97ad54f44d',
-    email: 'andrew@mail.com',
-    firstName: 'Dan',
-    lastName: 'also Dan',
-    phone: '38039272037',
-    password,
-  });
+  await dbContext.driverRepository.create(driver);
 });
 
 after(async () => {

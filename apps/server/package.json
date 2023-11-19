@@ -18,6 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
+    "chance": "^1.1.11",
     "dotenv": "^16.3.1",
     "fastify": "^4.21.0",
     "jsonwebtoken": "^9.0.1",
@@ -30,6 +31,7 @@
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
+    "@types/chance": "^1.1.6",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/pg": "^8.10.2",
     "@types/ws": "^8.5.5",
