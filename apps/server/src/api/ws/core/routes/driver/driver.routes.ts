@@ -2,12 +2,10 @@ import { inject, injectable } from 'tsyringe';
 
 import type { IDriverService } from '@domain/driver/index.js';
 
-import { appConfig } from '@infrastructure/config.js';
 import type { IJwtService } from '@infrastructure/crypto/jwt.service.js';
 
-import type { IDriverJwtPayload } from '@api/shared/services/index.js';
-
 import { type IJwtWsService } from '../../services/index.js';
+import type { UserData } from '../../session.manager.js';
 import {
   type DriverLoginParams,
   DriverLoginSchema,
@@ -55,11 +53,10 @@ export class WsDriverRouteHandlers implements IWsDriverRouteHandlers {
     };
   }
 
-  async me(params: DriverMeParams): WsMeHandlerResult {
+  async me(params: DriverMeParams, userData: UserData): WsMeHandlerResult {
     await DriverMeSchema.parseAsync(params);
 
-    const { email } = await this.jwt.verify<IDriverJwtPayload>(params.token, appConfig.jwtSecret);
-    const driver = await this.driverService.findByEmail(email);
+    const driver = await this.driverService.findByEmail(userData.email);
 
     return { data: fromDomain(driver), status: 200, event: 'me' };
   }

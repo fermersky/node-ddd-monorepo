@@ -15,16 +15,20 @@ export class WsHandlers implements IWsHandlers {
     const { id } = ws.getUserData();
     wsSessionManager.set(id, ws);
 
-    console.log(`Established new WS connection ${id}`);
+    console.log(`👋 Established new WS connection ${id}`);
   }
 
   async message(ws: WebSocket<UserData>, message: ArrayBuffer, isBinary: boolean) {
     try {
-      const messageJson = JSON.parse(new TextDecoder('utf8').decode(message)) as IWsIncomingMessage;
-
+      const messageTxt = new TextDecoder('utf8').decode(message);
+      const messageJson = JSON.parse(messageTxt) as IWsIncomingMessage<unknown>;
       await WsMessageSchema.parseAsync(messageJson);
 
-      const result = await handleMessage(messageJson);
+      console.log(`➡️  Incoming WS event ${messageJson.query}`);
+
+      const result = await handleMessage(messageJson, ws.getUserData());
+
+      console.log(`⬅️  Outgoing WS event ${messageJson.query}`);
 
       ws.send(JSON.stringify(result), isBinary);
     } catch (er) {
@@ -41,7 +45,7 @@ export class WsHandlers implements IWsHandlers {
     const { id } = ws.getUserData();
     wsSessionManager.delete(id);
 
-    console.log(`WebSocket closed, Goodbye ${id}`);
+    console.log(`✌️ WebSocket closed, Goodbye ${id}`);
   }
 
   async upgrade(res: HttpResponse, req: HttpRequest, context: us_socket_context_t) {

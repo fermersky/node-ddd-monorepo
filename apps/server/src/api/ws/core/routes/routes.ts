@@ -1,17 +1,36 @@
-import { container } from 'tsyringe';
+import { container, inject, injectable } from 'tsyringe';
 
+import type { UserData } from '../session.manager.js';
 import {
   type IWsDriverRouteHandlers,
   type IWsIncomingMessage,
   type WsHandlerResult,
 } from './driver/driver.routes.types.js';
 
-export const handleMessage = async (msg: IWsIncomingMessage): WsHandlerResult<unknown, string> => {
-  const driverRoutes = container.resolve<IWsDriverRouteHandlers>('IWsDriverRouteHandlers');
+@injectable()
+export class WsHandlers {
+  constructor(@inject('IWsDriverRouteHandlers') private driverRoutes: IWsDriverRouteHandlers) {}
 
-  if (msg.query in driverRoutes) {
-    return await driverRoutes[msg.query](msg.params);
+  resolve(query: keyof IWsDriverRouteHandlers) {
+    if (query in this.driverRoutes) {
+      return this.driverRoutes[query].bind(this.driverRoutes);
+    }
+
+    return this.notFound.bind(this, query);
   }
 
-  throw new Error('Invalid query');
+  notFound(query: string) {
+    return { event: query, data: { msg: 'No such query handler' }, status: 404 };
+  }
+}
+
+export const handleMessage = async (
+  msg: IWsIncomingMessage<unknown>,
+  userData: UserData,
+): WsHandlerResult<unknown, string> => {
+  const routes = container.resolve(WsHandlers);
+  const handler = routes.resolve(msg.query);
+
+  // @ts-ignore
+  return await handler(msg.params, userData);
 };

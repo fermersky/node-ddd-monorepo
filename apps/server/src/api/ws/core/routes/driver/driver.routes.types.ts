@@ -2,13 +2,15 @@ import { z } from 'zod';
 
 import type { Driver } from '@domain/driver/index.js';
 
+import type { UserData } from '../../session.manager.js';
+
 export const WsMessageSchema = z.object({
   query: z.string(),
-  params: z.any(),
+  params: z.unknown(),
 });
 
-export interface IWsIncomingMessage {
-  params: any;
+export interface IWsIncomingMessage<TParams> {
+  params: TParams;
   query: 'getAllDrivers' | 'me';
 }
 
@@ -29,7 +31,7 @@ export const DriverLoginSchema = z.object({
 });
 
 export const DriverMeSchema = z.object({
-  token: z.string(),
+  email: z.string(),
 });
 
 export type WsHandlerResult<T, Q> = Promise<IWsHandlerResult<T, Q>>;
@@ -43,9 +45,9 @@ export type WsGetAllDriversWsHandlerResult = WsHandlerResult<GetDriverResult[], 
 export type WsMeHandlerResult = WsHandlerResult<GetDriverResult, 'me'>;
 
 export interface IWsDriverRouteHandlers {
-  login(params: DriverLoginParams): WsLoginHandlerResult;
-  getAllDrivers(params: GetAllDriversParams): WsGetAllDriversWsHandlerResult;
-  me(params: DriverMeParams): WsMeHandlerResult;
+  login(params: DriverLoginParams, userData: UserData): WsLoginHandlerResult;
+  getAllDrivers(params: GetAllDriversParams, userData: UserData): WsGetAllDriversWsHandlerResult;
+  me(params: DriverMeParams, userData: UserData): WsMeHandlerResult;
 }
 
 export interface IWsWorkShiftRouteHandlers {
