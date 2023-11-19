@@ -8,13 +8,8 @@ import { DI } from '@api/shared/dependencies.js';
 
 import type { FastifyHandlerResult } from '../controller.types.js';
 import type { IDriverController } from './driver.controller.types.js';
-import {
-  type DriverLoginResponseBody,
-  DriverLoginSchema,
-  type GetDriverResponseBody,
-  type GetDriversResponseBody,
-  fromDomain,
-} from './driver.dto.js';
+import type { DriverLoginResponseBody, GetDriverResponseBody, GetDriversResponseBody } from './driver.dto.js';
+import { DriverLoginSchema, fromDomain } from './driver.dto.js';
 
 @injectable()
 export class DriverController implements IDriverController {

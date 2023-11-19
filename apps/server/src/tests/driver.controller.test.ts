@@ -29,9 +29,8 @@ before(async () => {
 });
 
 after(async () => {
-  await pool.raw(
-    'drop table drivers cascade; drop table work_shifts cascade; drop table migrations cascade; drop table migrations_lock cascade;',
-  );
+  await pool.migrate.rollback({}, true);
+
   await app.close();
   await pool.destroy();
 });

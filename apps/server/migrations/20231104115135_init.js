@@ -34,5 +34,5 @@ export const up = function (knex) {
  * @returns { Promise<void> }
  */
 export const down = function (knex) {
-  return knex.schema.dropTable('drivers');
+  return knex.schema.raw('DROP TABLE IF EXISTS drivers CASCADE; DROP TABLE IF EXISTS work_shifts CASCADE;');
 };
