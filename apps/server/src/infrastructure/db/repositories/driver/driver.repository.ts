@@ -41,14 +41,21 @@ export class KnexDriverRepository implements IDriverRepository {
   async findByEmail(email: string) {
     const result = await this.client('drivers')
       .leftJoin('work_shifts', 'drivers.id', 'work_shifts.driver_id')
-      .select('*', 'work_shifts.id as work_shift_id')
+      .select(
+        'drivers.id as id',
+        'phone',
+        'first_name',
+        'last_name',
+        'email',
+        'work_shifts.id as work_shift_id',
+        'start',
+        'end',
+      )
       .where({ email });
 
     if (result == null || result.length === 0) {
       throw new DriverDoesNotExistError(email);
     }
-
-    console.log({ result });
 
     return mapDriversWorkShiftsToDomain(result)[0];
   }

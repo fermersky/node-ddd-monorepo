@@ -28,7 +28,7 @@ export const mapDriverToDomain = (driver: IDriverQueryResult): Driver => {
   };
 };
 
-export interface IDriverWorkShiftsQueryResult extends IDriverQueryResult, Partial<IWorkShiftQuery> {}
+export interface IDriverWorkShiftsQueryResult extends IDriverQueryResult, IWorkShiftQuery {}
 
 export const mapDriversWorkShiftsToDomain = (driversWs: IDriverWorkShiftsQueryResult[]): Driver[] => {
   const workShifts = new Map<string, WorkShift[]>();
@@ -42,9 +42,9 @@ export const mapDriversWorkShiftsToDomain = (driversWs: IDriverWorkShiftsQueryRe
       workShifts.set(driverWs.id, [
         {
           id: driverWs.work_shift_id,
-          start: driverWs.start!,
-          end: driverWs.end!,
-          driverId: driverWs.driver_id!,
+          start: driverWs.start,
+          end: driverWs.end,
+          driverId: driverWs.driver_id,
         },
         ...value,
       ]);
@@ -52,9 +52,9 @@ export const mapDriversWorkShiftsToDomain = (driversWs: IDriverWorkShiftsQueryRe
       workShifts.set(driverWs.id, [
         {
           id: driverWs.work_shift_id,
-          start: driverWs.start!,
-          end: driverWs.end!,
-          driverId: driverWs.driver_id!,
+          start: driverWs.start,
+          end: driverWs.end,
+          driverId: driverWs.driver_id,
         },
       ]);
     }
