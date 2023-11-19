@@ -47,6 +47,7 @@ export class KnexDriverRepository implements IDriverRepository {
         'first_name',
         'last_name',
         'email',
+        'password',
         'work_shifts.id as work_shift_id',
         'start',
         'end',

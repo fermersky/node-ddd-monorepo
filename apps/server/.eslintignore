@@ -2,4 +2,3 @@ node_modules/
 .husky/
 .vscode/
 dist
-jest.config.js

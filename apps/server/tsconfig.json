@@ -1,7 +1,6 @@
 {
   "extends": "tsconfig/base",
   "include": ["./src/**/*", "knexfile.js"],
-  "exclude": ["jest.config.js"],
   "compilerOptions": {
     "paths": {
       "@domain/*": ["./src/domain/*"],
