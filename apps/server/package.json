@@ -10,7 +10,7 @@
     "dev": "run-p dev:*",
     "dev:watch": "tsx watch ./src/app.ts",
     "dev:tsc": "tsc -w --noEmit",
-    "test": "NODE_ENV=test node --test --import tsx src/tests/*.test.ts",
+    "test": "NODE_ENV=test node --test --test-reporter=spec --import tsx src/tests/**/*.test.ts",
     "build": "esbuild $(find ./src \\( -name '*.ts' \\)) --platform=node --outdir=dist --format=esm && tsc-alias"
   },
   "keywords": [],

@@ -13,8 +13,8 @@ import {
   GetDriversSchema,
 } from '@api/http/controller/driver/driver.dto.js';
 
-import { makeAuthenticatedRequest, makeRequest } from './util/common.js';
-import { randomDriver } from './util/driver.faker.js';
+import { makeAuthenticatedRequest, makeRequest } from '../util/common.js';
+import { randomDriver } from '../util/driver.faker.js';
 
 const shared = { address: '' };
 const dbContext = new KnexDbContext(pool);
