@@ -2,18 +2,27 @@
 
 This is a Node.js server that implements Domain-Driven Design (DDD) in a minimalistic way. The main purpose of this server is to focus on business logic and be agnostic to any transport or protocol.
 
-The server has two entities, namely Driver and WorkShift. A driver can have multiple shifts. Instead of using an ORM, the server uses manual mapping from SQL queries to domain entities. The server implements dependency injection using ESM and function parameters. However, using `tsyringe/inversify` libraries would be a better option as it would remove the responsibility of instantiating dependencies from the app code.
+The server has two entities, namely `Driver` and `WorkShift`. A driver can have multiple shifts. Instead of using an ORM, the server uses manual mapping from SQL queries to domain entities. The server implements dependency injection using `tsyringe` library.
 
-The server supports two different transports: HTTP (fastify) and WebSocket (uWebSocket.js).
+The server supports two different transports: HTTP (`fastify`) and WebSocket (`uWebSocket.js`).
 
-The documentation is generated using Docusaurus, and can be found in the `drivers-app-docs` folder.
+The documentation is generated using `Docusaurus`, and can be found in the `./apps/docs` folder.
 
 ## Some libs from the app stack
 
-- `tsx`: for local development & file watching
-- `esbuild`: for TS -> JS compilation
-- `tsc-alias`: for replacing paths aliases (such as `@api, @domain and @infrastrcuture`) with relative paths
+- `pnpm`: package manager
+- `tsx`: local TS development & file watching
+- `tsc`: TS linting
+- `tsc-alias`: replacing paths aliases (such as `@api, @domain and @infrastrcuture`) with relative paths
+- `esbuild`: TS -> JS compilation
+- `node:test`: node.js native test runner
+- `knex`: query builder & migrations
+- `chance`: generating random data
+- `zod`: validation & schema defs
+- `docusaurus`: API docs
+- `tsyringe`: DI library
 - `uWebSockets.js`: C++ implementation of WebSockets
+- `fastify`: HTTP framework
 - `Turborepo`: build system for monorepo - https://turbo.build/repo
 
 ## Turborepo
