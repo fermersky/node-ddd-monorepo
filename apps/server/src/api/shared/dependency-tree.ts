@@ -1,7 +1,5 @@
 import { container } from 'tsyringe';
 
-import { DriverService } from '@domain/driver/driver.service.js';
-
 import { BcryptService } from '@infrastructure/crypto/bcrypt.service.js';
 import { JwtService } from '@infrastructure/crypto/jwt.service.js';
 import { KnexDbContext } from '@infrastructure/db/pg/context.js';
@@ -13,6 +11,7 @@ import { WsHandlers } from '@api/ws/core/handlers/handlers.js';
 import { WsDriverRouteHandlers } from '@api/ws/core/routes/driver/driver.routes.js';
 import { JwtWsService } from '@api/ws/core/services/jwt-ws.service.js';
 
+import { DriverService } from '../../core/driver/driver.service.js';
 import { DI } from './dependencies.js';
 import { JwtValidationService } from './services/jwt-validation.service.js';
 

@@ -1,6 +1,6 @@
 import type { Schema } from 'zod';
 
-import { DriverLoginResponseSchema } from '@api/http/controller/driver/driver.dto.js';
+import { DriverLoginResponseSchema } from '@shared/http/driver.dto.js';
 
 export const makeRequest = async <TSchema>(
   address: string,

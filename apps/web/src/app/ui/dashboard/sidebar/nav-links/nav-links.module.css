@@ -1,0 +1,19 @@
+.links {
+  width: 100%;
+  margin: 10px;
+  box-sizing: border-box;
+  padding: 0.5rem;
+}
+
+.link {
+  display: block;
+  padding: 1rem 1rem;
+  margin: 0.5rem;
+  border-radius: 0.5rem;
+  border: 2px solid #a4a4a4;
+  /* background: #ff6393; */
+}
+
+.active {
+  background: #ff6393;
+}

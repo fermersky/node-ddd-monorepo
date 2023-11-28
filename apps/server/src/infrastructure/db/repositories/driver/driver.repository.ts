@@ -31,6 +31,7 @@ export class KnexDriverRepository implements IDriverRepository {
         password: driver.password,
         first_name: driver.firstName,
         last_name: driver.lastName,
+        phone: driver.phone,
       },
       '*',
     );

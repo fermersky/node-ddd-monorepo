@@ -1,11 +1,10 @@
 import chance from 'chance';
-import { container } from 'tsyringe';
 
 import type { Driver } from '@domain/driver/index.js';
 
-import type { IBcryptService } from '@infrastructure/crypto/bcrypt.service.js';
+import { BcryptService } from '@infrastructure/crypto/bcrypt.service.js';
 
-const bcryptService = container.resolve<IBcryptService>('IBcryptService');
+const bcryptService = new BcryptService();
 
 const ch = chance();
 

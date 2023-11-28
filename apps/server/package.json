@@ -17,6 +17,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@fastify/cors": "^8.4.1",
     "bcrypt": "^5.1.0",
     "chance": "^1.1.11",
     "dotenv": "^16.3.1",
@@ -40,6 +41,7 @@
     "prettier": "~3.0.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^5.0.5",
+    "shared": "workspace:*",
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.8",
     "tsconfig": "workspace:*",

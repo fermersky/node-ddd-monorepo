@@ -1,0 +1,8 @@
+.card {
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  /* background: rebeccapurple; */
+  background: #ff6393;
+  border-radius: 0.5rem;
+}

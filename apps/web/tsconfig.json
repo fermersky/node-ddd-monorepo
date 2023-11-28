@@ -1,0 +1,11 @@
+{
+  "extends": "tsconfig/nextjs",
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "compilerOptions": {
+    "verbatimModuleSyntax": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@shared/http/*": ["../shared/http/*"]
+    }
+  }
+}

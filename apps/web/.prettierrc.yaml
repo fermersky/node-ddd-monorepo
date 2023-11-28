@@ -1,0 +1,6 @@
+printWidth: 110
+plugins: ['@trivago/prettier-plugin-sort-imports']
+importOrder: ['^@domain/(.*)$', '^@infrastructure/(.*)$', '^@api/(.*)$', '^@shared/(.*)$', '^[./]']
+importOrderSeparation: true
+importOrderSortSpecifiers: true
+singleQuote: true

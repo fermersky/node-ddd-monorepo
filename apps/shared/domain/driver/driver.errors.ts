@@ -1,4 +1,4 @@
-import { DomainError } from '@domain/domain.errors.js';
+import { DomainError } from '../domain.errors.js';
 
 export class DriverDoesNotExistError extends DomainError {
   constructor(driverId: string) {

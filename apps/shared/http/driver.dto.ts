@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import type { Driver } from '@domain/driver/index.js';
+import type { Driver } from '../domain/driver/index.js';
 
 export const GetDriverSchema = z.object({
   id: z.string(),
@@ -14,6 +14,7 @@ export const GetDriverSchema = z.object({
         id: z.string(),
         start: z.string(),
         end: z.string(),
+        driverId: z.string(),
       }),
     )
     .optional(),

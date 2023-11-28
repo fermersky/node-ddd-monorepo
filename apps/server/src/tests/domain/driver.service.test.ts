@@ -1,9 +1,8 @@
+import type { DriverService } from '@core/driver/driver.service.js';
 import assert from 'node:assert';
 import { before, beforeEach, describe, mock, test } from 'node:test';
 import 'reflect-metadata';
 import { container } from 'tsyringe';
-
-import type { DriverService } from '@domain/driver/index.js';
 
 import { DI } from '@api/shared/dependencies.js';
 import '@api/shared/dependency-tree.js';

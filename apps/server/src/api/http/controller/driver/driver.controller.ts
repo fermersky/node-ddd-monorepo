@@ -6,10 +6,15 @@ import type { IDriverService } from '@domain/driver/index.js';
 import type { IJwtHttpService } from '@api/http/core/services/jwt-http.service.js';
 import { DI } from '@api/shared/dependencies.js';
 
+import type {
+  DriverLoginResponseBody,
+  GetDriverResponseBody,
+  GetDriversResponseBody,
+} from '@shared/http/driver.dto.js';
+import { DriverLoginSchema, fromDomain } from '@shared/http/driver.dto.js';
+
 import type { FastifyHandlerResult } from '../controller.types.js';
 import type { IDriverController } from './driver.controller.types.js';
-import type { DriverLoginResponseBody, GetDriverResponseBody, GetDriversResponseBody } from './driver.dto.js';
-import { DriverLoginSchema, fromDomain } from './driver.dto.js';
 
 @injectable()
 export class DriverController implements IDriverController {

@@ -8,11 +8,15 @@
     "docs#build": {
       "outputs": ["apps/docs/build/**"]
     },
+    "shared#build": {
+      "outputs": ["apps/shared/dist/**"]
+    },
+    "web#build": {
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
     "format": {},
     "lint": {},
-    "test": {
-      "outputs": ["apps/server/dist/**"]
-    },
+    "test": {},
     "dev": {
       "cache": false,
       "persistent": true

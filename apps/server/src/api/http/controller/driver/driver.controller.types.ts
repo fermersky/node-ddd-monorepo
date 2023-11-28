@@ -1,7 +1,12 @@
 import type { FastifyRequest } from 'fastify';
 
+import type {
+  DriverLoginResponseBody,
+  GetDriverResponseBody,
+  GetDriversResponseBody,
+} from '@shared/http/driver.dto.js';
+
 import type { FastifyHandlerResult } from '../controller.types.js';
-import type { DriverLoginResponseBody, GetDriverResponseBody, GetDriversResponseBody } from './driver.dto.js';
 
 export interface IDriverController {
   getAll(req: FastifyRequest): FastifyHandlerResult<GetDriversResponseBody>;

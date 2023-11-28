@@ -1,14 +1,13 @@
 import { inject, injectable } from 'tsyringe';
 
+import type { IDbContext } from '@domain/domain.interface.js';
 import { CouldNotAuthenticateDriver, DriverDoesNotExistError } from '@domain/driver/driver.errors.js';
 import type { IDriverService } from '@domain/driver/driver.interface.js';
-import type { IDbContext } from '@domain/index.js';
+import type { Driver } from '@domain/driver/index.js';
 
 import { type IBcryptService } from '@infrastructure/crypto/bcrypt.service.js';
 
 import { DI } from '@api/shared/dependencies.js';
-
-import type { Driver } from './index.js';
 
 @injectable()
 export class DriverService implements IDriverService {
@@ -16,6 +15,12 @@ export class DriverService implements IDriverService {
     @inject(DI.DbContext) private db: IDbContext,
     @inject(DI.BcryptService) private bcrypt: IBcryptService,
   ) {}
+
+  async create(driver: Driver): Promise<Driver> {
+    await this.db.driverRepository.create(driver);
+
+    return driver;
+  }
 
   async getAll(): Promise<Driver[]> {
     return await this.db.driverRepository.getAll();

@@ -1,0 +1,35 @@
+.txtInput {
+  padding: 16px;
+  font-size: 25px;
+  border-radius: 10px;
+  outline: none;
+  border: none;
+  box-sizing: border-box;
+  margin: 10px;
+}
+
+.txtInput:focus {
+  border: 1px solid deeppink;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.submitBtn {
+  padding: 10px 20px;
+  outline: none;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  margin: 10px;
+  background: deeppink;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.submitBtn:active {
+  transform: scale(0.9);
+}
