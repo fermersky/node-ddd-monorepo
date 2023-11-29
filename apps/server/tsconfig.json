@@ -3,8 +3,8 @@
   "include": ["./src/**/*"],
   "compilerOptions": {
     "paths": {
-      "@domain/*": ["../shared/domain/*"],
-      "@shared/http/*": ["../shared/http/*"],
+      // "@domain/*": ["../shared/domain/*"],
+      // "@shared/http/*": ["../shared/http/*"],
       "@core/*": ["./src/core/*"],
       "@infrastructure/*": ["./src/infrastructure/*"],
       "@api/*": ["./src/api/*"]

@@ -1,14 +1,15 @@
 import { getDrivers } from '@/app/actions';
 
-export default async function Drivers() {
-  // const drivers = await getDrivers();
+export const dynamic = 'force-dynamic';
 
-  // return (
-  //   <>
-  //     {drivers.map((d) => (
-  //       <p key={d.id}>{[d.firstName, d.lastName].join(' ')}</p>
-  //     ))}
-  //   </>
-  // );
-  return <p>ok</p>;
+export default async function Page() {
+  const drivers = await getDrivers();
+
+  return (
+    <ul>
+      {drivers.map((d) => (
+        <li key={d.id}>{[d.firstName, d.lastName].join(' ')}</li>
+      ))}
+    </ul>
+  );
 }

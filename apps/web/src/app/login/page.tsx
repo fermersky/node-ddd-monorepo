@@ -5,7 +5,7 @@ import { type ChangeEvent, type FormEvent, useState } from 'react';
 import { driverLogin } from './actions';
 import styles from './page.module.css';
 
-export default function Login() {
+export default function Page() {
   const [formData, setFormData] = useState<{ email?: string; password?: string }>({});
 
   const handleSubmit = async (e: FormEvent) => {

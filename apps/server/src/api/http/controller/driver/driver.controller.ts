@@ -1,17 +1,15 @@
 import type { FastifyRequest } from 'fastify';
-import { inject, injectable } from 'tsyringe';
-
-import type { IDriverService } from '@domain/driver/index.js';
-
-import type { IJwtHttpService } from '@api/http/core/services/jwt-http.service.js';
-import { DI } from '@api/shared/dependencies.js';
-
+import type { IDriverService } from 'shared/domain/driver/index.js';
 import type {
   DriverLoginResponseBody,
   GetDriverResponseBody,
   GetDriversResponseBody,
-} from '@shared/http/driver.dto.js';
-import { DriverLoginSchema, fromDomain } from '@shared/http/driver.dto.js';
+} from 'shared/http/driver.dto.js';
+import { DriverLoginSchema, fromDomain } from 'shared/http/driver.dto.js';
+import { inject, injectable } from 'tsyringe';
+
+import type { IJwtHttpService } from '@api/http/core/services/jwt-http.service.js';
+import { DI } from '@api/shared/dependencies.js';
 
 import type { FastifyHandlerResult } from '../controller.types.js';
 import type { IDriverController } from './driver.controller.types.js';

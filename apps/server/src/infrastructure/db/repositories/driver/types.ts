@@ -1,5 +1,5 @@
-import type { Driver } from '@domain/driver/index.js';
-import type { WorkShift } from '@domain/work_shift/index.js';
+import type { Driver } from 'shared/domain/driver/index.js';
+import type { WorkShift } from 'shared/domain/work_shift/index.js';
 
 export interface IWorkShiftQuery {
   start: string;

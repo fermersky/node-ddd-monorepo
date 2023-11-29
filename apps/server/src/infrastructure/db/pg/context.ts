@@ -1,6 +1,5 @@
 import type { Knex } from 'knex';
-
-import type { IDbContext } from '@domain/domain.interface.js';
+import type { IDbContext } from 'shared/domain/domain.interface.js';
 
 import { KnexDriverRepository } from '../repositories/driver/driver.repository.js';
 

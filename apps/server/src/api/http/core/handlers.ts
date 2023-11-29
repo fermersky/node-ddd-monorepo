@@ -1,7 +1,6 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
+import { DomainError } from 'shared/domain/domain.errors.js';
 import { ZodError, z } from 'zod';
-
-import { DomainError } from '@domain/domain.errors.js';
 
 import randomService from '@infrastructure/crypto/random.service.js';
 

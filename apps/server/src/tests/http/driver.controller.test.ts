@@ -1,14 +1,13 @@
 import expect from 'node:assert';
 import { after, before, describe, test } from 'node:test';
 import 'reflect-metadata';
+import { DriverLoginResponseSchema, GetDriverSchema, GetDriversSchema } from 'shared/http/driver.dto.js';
 
 import { appConfig } from '@infrastructure/config.js';
 import { KnexDbContext } from '@infrastructure/db/pg/context.js';
 import { pool } from '@infrastructure/db/pg/index.js';
 
 import app from '@api/http/app.js';
-
-import { DriverLoginResponseSchema, GetDriverSchema, GetDriversSchema } from '@shared/http/driver.dto.js';
 
 import { makeAuthenticatedRequest, makeRequest } from '../util/common.js';
 import { randomDriver } from '../util/driver.faker.js';

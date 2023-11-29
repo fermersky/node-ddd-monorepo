@@ -1,6 +1,5 @@
+import type { IDriverService } from 'shared/domain/driver/index.js';
 import { inject, injectable } from 'tsyringe';
-
-import type { IDriverService } from '@domain/driver/index.js';
 
 import { DI } from '@api/shared/dependencies.js';
 
