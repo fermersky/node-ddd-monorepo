@@ -7,11 +7,11 @@ export const GetDriverSchema = z.object({
     lastName: z.string(),
     workShifts: z
         .array(z.object({
-        id: z.string(),
-        start: z.string(),
-        end: z.string(),
-        driverId: z.string(),
-    }))
+            id: z.string(),
+            start: z.string(),
+            end: z.string(),
+            driverId: z.string(),
+        }))
         .optional(),
 });
 export const GetDriversSchema = z.array(GetDriverSchema);

@@ -9,7 +9,7 @@ import type { GetDriversResponseBody } from '@shared/http/driver.dto';
 import { DriverCard } from '../driver-card/driver-card';
 import styles from './driver-list.module.css';
 
-export async function DriversList() {
+export function DriversList() {
   const [drivers, setDrivers] = useState<GetDriversResponseBody>([]);
 
   useEffect(() => {

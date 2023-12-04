@@ -1,4 +1,4 @@
-import type { IDriverRepository } from './driver/index.js';
+import type { IDriverRepository } from './driver/driver.interface.js';
 
 export interface IRepository<T> {
   getAll(): Promise<T[]>;

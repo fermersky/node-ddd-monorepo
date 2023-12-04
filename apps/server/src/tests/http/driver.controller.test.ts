@@ -1,4 +1,4 @@
-import expect from 'node:assert';
+import assert from 'node:assert';
 import { after, before, describe, test } from 'node:test';
 import 'reflect-metadata';
 import { DriverLoginResponseSchema, GetDriverSchema, GetDriversSchema } from 'shared/http/driver.dto.js';
@@ -44,24 +44,24 @@ describe('Driver controller endpoints tests', () => {
       }),
     });
 
-    expect.equal(status, 200);
-    expect.ok('token' in body);
+    assert.equal(status, 200);
+    assert.ok('token' in body);
   });
 
   test('GET /driver/me returns 200 status and driver data based on the payload of an authorization token', async () => {
     const { status, body } = await makeAuthenticatedRequest(`${shared.address}/driver/me`, GetDriverSchema);
 
-    expect.equal(status, 200);
-    expect.ok('id' in body);
-    expect.ok('email' in body);
-    expect.equal(body.email, 'andrew@mail.com');
+    assert.equal(status, 200);
+    assert.ok('id' in body);
+    assert.ok('email' in body);
+    assert.equal(body.email, 'andrew@mail.com');
   });
 
   test('GET /drivers returns 200 status and all drivers available in the db', async () => {
     const { status, body } = await makeAuthenticatedRequest(`${shared.address}/drivers`, GetDriversSchema);
 
-    expect.equal(status, 200);
+    assert.equal(status, 200);
 
-    expect.ok(body instanceof Array);
+    assert.ok(body instanceof Array);
   });
 });
