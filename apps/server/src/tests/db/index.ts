@@ -1,4 +1,4 @@
-import type { IDbContext } from 'shared/domain/index.js';
+import type { IDbContext } from 'shared';
 
 import { DriverRepositoryStub } from './driver.repository.stub.js';
 

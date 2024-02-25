@@ -1,9 +1,5 @@
 import type { FastifyRequest } from 'fastify';
-import type {
-  DriverLoginResponseBody,
-  GetDriverResponseBody,
-  GetDriversResponseBody,
-} from 'shared/http/driver.dto.js';
+import type { DriverLoginResponseBody, GetDriverResponseBody, GetDriversResponseBody } from 'shared';
 
 import type { FastifyHandlerResult } from '../controller.types.js';
 

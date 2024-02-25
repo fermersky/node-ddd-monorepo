@@ -1,7 +1,7 @@
 import assert from 'node:assert';
 import { after, before, describe, test } from 'node:test';
 import 'reflect-metadata';
-import { DriverLoginResponseSchema, GetDriverSchema, GetDriversSchema } from 'shared/http/driver.dto.js';
+import { DriverLoginResponseSchema, GetDriverSchema, GetDriversSchema } from 'shared';
 
 import { appConfig } from '@infrastructure/config.js';
 import { KnexDbContext } from '@infrastructure/db/pg/context.js';

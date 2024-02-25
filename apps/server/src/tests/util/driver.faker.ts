@@ -1,5 +1,5 @@
 import chance from 'chance';
-import type { Driver } from 'shared/domain/driver/index.js';
+import type { Driver } from 'shared';
 
 import { BcryptService } from '@infrastructure/crypto/bcrypt.service.js';
 

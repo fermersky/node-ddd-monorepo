@@ -2,10 +2,15 @@
   "name": "shared",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
+  "types": "dist",
   "type": "module",
   "scripts": {
-    "build": "pnpm tsc"
+    "build": "pnpm tsc",
+    "postinstall": "pnpm build"
   },
   "keywords": [],
   "author": "",

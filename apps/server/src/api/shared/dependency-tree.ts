@@ -24,7 +24,14 @@ container.register(DI.JwtService, { useClass: JwtService });
 container.register(DI.JwtValidationService, { useClass: JwtValidationService });
 container.register(DI.JwtWsService, { useClass: JwtWsService });
 container.register(DI.JwtHttpService, { useClass: JwtHttpService });
-container.register(DI.DbContext, { useValue: new KnexDbContext(pool) });
+// container.register(DI.DbContext, { useValue: new KnexDbContext(pool) });
+
+container.register(DI.DbContext, {
+  useFactory: (c) => {
+    console.log('here');
+    return new KnexDbContext(pool);
+  },
+});
 
 // api
 container.register(DI.WsDriverRouteHandlers, { useClass: WsDriverRouteHandlers });

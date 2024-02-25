@@ -1,4 +1,4 @@
-import type { Driver } from 'shared/domain/driver/index.js';
+import type { Driver } from 'shared';
 import { z } from 'zod';
 
 import type { UserData } from '../../session.manager.js';

@@ -1,8 +1,7 @@
 import assert from 'node:assert';
 import { after, before, describe, mock, test } from 'node:test';
 import 'reflect-metadata';
-import type { IDriverRepository } from 'shared/domain/driver/index.js';
-import type { IDbContext } from 'shared/domain/index.js';
+import type { IDbContext, IDriverRepository } from 'shared';
 import { container } from 'tsyringe';
 
 import { DI } from '@api/shared/dependencies.js';

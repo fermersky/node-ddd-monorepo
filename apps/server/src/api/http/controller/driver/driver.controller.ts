@@ -1,11 +1,11 @@
 import type { FastifyRequest } from 'fastify';
-import type { IDriverService } from 'shared/domain/driver/index.js';
 import type {
   DriverLoginResponseBody,
   GetDriverResponseBody,
   GetDriversResponseBody,
-} from 'shared/http/driver.dto.js';
-import { DriverLoginSchema, fromDomain } from 'shared/http/driver.dto.js';
+  IDriverService,
+} from 'shared';
+import { DriverLoginSchema, fromDomain } from 'shared';
 import { inject, injectable } from 'tsyringe';
 
 import type { IJwtHttpService } from '@api/http/core/services/jwt-http.service.js';

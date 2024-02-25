@@ -11,6 +11,7 @@
     "dev:watch": "tsx watch ./src/app.ts",
     "dev:tsc": "tsc -w --noEmit",
     "test": "NODE_ENV=test node --test --test-reporter=spec --import tsx src/tests/**/*.test.ts",
+    "test-cov": "NODE_ENV=test npx c8 node --test --test-reporter=spec --import tsx src/tests/**/*.test.ts",
     "build": "esbuild $(find ./src \\( -name '*.ts' \\)) --platform=node --outdir=dist --format=esm && tsc-alias"
   },
   "keywords": [],
@@ -19,6 +20,8 @@
   "dependencies": {
     "@fastify/cors": "^8.4.1",
     "bcrypt": "^5.1.0",
+    "bestdriver-core": "^1.1.1",
+    "c8": "^9.1.0",
     "chance": "^1.1.11",
     "dotenv": "^16.3.1",
     "fastify": "^4.21.0",

@@ -1,5 +1,5 @@
+import { type Driver, DriverDoesNotExistError, type IDriverRepository } from 'bestdriver-core';
 import type { Knex } from 'knex';
-import { type Driver, DriverDoesNotExistError, type IDriverRepository } from 'shared/domain/driver/index.js';
 
 import { type IDriverQueryResult, mapDriverToDomain, mapDriversWorkShiftsToDomain } from './types.js';
 

@@ -1,5 +1,5 @@
 import { mock } from 'node:test';
-import type { Driver, IDriverRepository } from 'shared/domain/driver/index.js';
+import type { Driver, IDriverRepository } from 'shared';
 
 export class DriverRepositoryStub implements IDriverRepository {
   /**

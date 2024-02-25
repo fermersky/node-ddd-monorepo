@@ -1,4 +1,4 @@
-import type { Driver } from 'shared/domain/driver';
+import type { Driver } from 'shared';
 
 import styles from './driver-card.module.css';
 

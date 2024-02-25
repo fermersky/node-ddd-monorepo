@@ -1,7 +1,5 @@
-import type { IDbContext } from 'shared/domain/domain.interface.js';
-import { CouldNotAuthenticateDriver, DriverDoesNotExistError } from 'shared/domain/driver/driver.errors.js';
-import type { IDriverService } from 'shared/domain/driver/driver.interface.js';
-import type { Driver } from 'shared/domain/driver/index.js';
+import { CouldNotAuthenticateDriver, DriverDoesNotExistError } from 'shared';
+import type { Driver, IDbContext, IDriverService } from 'shared';
 import { inject, injectable } from 'tsyringe';
 
 import { type IBcryptService } from '@infrastructure/crypto/bcrypt.service.js';
